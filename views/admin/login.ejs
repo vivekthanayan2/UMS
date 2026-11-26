@@ -1,0 +1,40 @@
+<% include("../layouts/header.ejs") %>
+
+<h1>Admin Login</h1>
+
+<%
+    if(typeof message !== "undefined"){
+    %>
+    <h3><%= message %></h3>
+    <%
+    }
+
+%>
+
+<form action="" method="post">
+
+    <input type="email" name="email" placeholder="Enter your Email">
+    <br><br>
+    <input type="password" name="password" id="password" placeholder="Enter your Password" minlength=6>
+    <br><br>
+    <input type="submit" value="Login">
+    <br><br>
+
+</form>
+
+<script>
+    const password = document.getElementById("password")
+    password.addEventListener("input",()=>{
+        if(password.value.length < 6){
+            password.setCustomValidity("Password must contain at least 6 characters.")
+        }else{
+            password.setCustomValidity("")
+        }
+    })
+</script>
+
+<a href="/admin/forget">Forget Password</a>
+
+
+
+<% include("../layouts/footer.ejs") %>

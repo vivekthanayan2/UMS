@@ -1,0 +1,44 @@
+<% include("../layouts/header.ejs") %>
+
+
+<h1>Edit User</h1>
+
+<% if (typeof message !== "undefined") { %>
+    <p style="color: red;"><%= message %></p>
+<% } %>
+
+<form action="" method="post">
+
+    <input type="name" name="name" placeholder="Enter Name" value="<%= user.name %>" required>
+    <br><br>
+    <input type="email" name="email" placeholder="Enter Email" value="<%= user.email %>" required>
+    <br><br>
+    <input type="tel" name="mobile" id="mobile" placeholder="Enter Mobile" value="<%= user.mobile %>" required>
+    <br><br>
+    <label>Verified</label>
+    <input type="radio" name="verify" value="1" <% if(user.isVerified == 1){ %> checked <% } %> >
+    <label>Unverified</label>
+    <input type="radio" name="verify" value="0" <% if(user.isVerified == 0){ %> checked <% } %>>
+    <br><br>
+    <input type="hidden" name="id" value="<%= user._id %>" >
+    <input type="submit" value="Update User">
+    <br>
+
+</form>
+
+<a href="/admin/dashboard">Go to Dashboard</a>
+
+<script>
+    const mobile = document.getElementById("mobile")
+    mobile.addEventListener("input",()=>{
+        mobile.value = mobile.value.replace(/\D/g, "").slice(0, 10);
+
+        if(mobile.value.length < 10){
+            mobile.setCustomValidity("Mobile number must contain 10 digits.")
+        }else{
+            mobile.setCustomValidity("")
+        }
+    })
+</script>
+
+<% include("../layouts/footer.ejs") %>

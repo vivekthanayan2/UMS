@@ -1,0 +1,93 @@
+<% include("../layouts/header.ejs") %>
+
+<h1>User Registration Form</h1>
+
+<form action="" method = "post" enctype="multipart/form-data">
+    <input type="text" name="name" placeholder="Enter your name" required>
+    <br>
+    <br>
+    <input type="email" name="email" placeholder="Enter your email" required>
+    <br>
+    <br>
+    <input type="tel" name="mobile" id="mobile"  placeholder="Enter your mobile number" required  pattern="[0-9]{10}" >
+    <br>
+    <br>
+    <input type="file" name="image" id="image" accept="image/*" required hidden>
+
+<button type="button" onclick="document.getElementById('image').click()">
+    Choose Image
+</button>
+
+<br><br>
+
+<img id="imagePreview"
+     alt="Image Preview"
+     style="display:none; width:150px; height:150px; object-fit:cover;">
+    <br>
+    <br>
+    <input type="password" name="password" id="password"  placeholder="Enter your password" required minlength="6">
+    <button type="button" onclick="togglePassword()">👁</button>
+    <br>
+    <br>
+    <input type="submit" value="Register">
+</form>
+
+<script>
+    function togglePassword() {
+    const password = document.getElementById("password");
+    const button = event.target;
+
+    if (password.type === "password") {
+        password.type = "text";
+       
+    } else {
+        password.type = "password";
+       
+    }
+}
+const password = document.getElementById("password");
+
+password.addEventListener("input", function () {
+    if (password.value.length < 6) {
+        password.setCustomValidity("Password must contain at least 6 characters.");
+    } else {
+        password.setCustomValidity("");
+    }
+});
+
+const mobile = document.getElementById("mobile");
+
+mobile.addEventListener("input", function () {
+    mobile.value = mobile.value.replace(/\D/g, "").slice(0, 10);
+
+    if (mobile.value.length < 10) {
+        mobile.setCustomValidity("Mobile number must contain 10 digits.");
+    } else {
+        mobile.setCustomValidity("");
+    }
+});
+
+const image = document.getElementById("image");
+const imagePreview = document.getElementById("imagePreview");
+
+image.addEventListener("change", function () {
+    const file = image.files[0];
+
+    if (file) {
+        imagePreview.src = URL.createObjectURL(file);
+        imagePreview.style.display = "block";
+    }
+});
+
+</script>
+
+
+<a></a>Already have an account? <a href="/login">Login</a>
+
+<p>
+    <% if (typeof message !== "undefined") { %>
+        <%= message %>
+    <% } %>
+</p>
+
+<% include("../layouts/footer.ejs") %>

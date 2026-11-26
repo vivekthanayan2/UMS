@@ -1,0 +1,63 @@
+<% include("../layouts/header.ejs") %>
+
+<h1>Add New User</h1>
+
+<% if (typeof message !== "undefined") { %>
+    <p style="color: red;"><%= message %></p>
+<% } %>
+
+<form action="" method = "post" enctype="multipart/form-data">
+    <input type="text" name="name" placeholder="Enter name" required>
+    <br>
+    <br>
+    <input type="email" name="email" placeholder="Enter email" required>
+    <br>
+    <br>
+    <input type="number" name="mobile"  id="mobile" placeholder="Enter mobile number" required>
+    <br>
+    <br>
+    <input type="file" name="image" id="image" accept="image/*" required hidden>
+
+<button type="button" onclick="document.getElementById('image').click()">
+    Choose Image
+</button>
+
+<br><br>
+
+<img id="imagePreview"
+     alt="Image Preview"
+     style="display:none; width:150px; height:150px; object-fit:cover;">
+    <br>
+    <br>
+    <input type="submit" value="Add User">
+</form> 
+
+<a href="/admin/dashboard">Go Back</a>
+
+<script>
+    const mobile = document.getElementById("mobile")
+    mobile.addEventListener("input",()=>{
+        mobile.value = mobile.value.replace(/\D/g, "").slice(0, 10);
+
+        if(mobile.value.length < 10){
+            mobile.setCustomValidity("Mobile number must contain 10 digits.")
+        }else{
+            mobile.setCustomValidity("")
+        }
+    })
+
+const image = document.getElementById("image");
+
+const imagePreview = document.getElementById("imagePreview");
+
+image.addEventListener("change", function () {
+    const file = image.files[0];
+
+    if (file) {
+        imagePreview.src = URL.createObjectURL(file);
+        imagePreview.style.display = "block";
+    }
+});
+</script>
+
+<% include("../layouts/footer.ejs") %>

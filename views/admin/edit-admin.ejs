@@ -1,0 +1,64 @@
+<% include("../layouts/header.ejs") %>
+
+<h1>Edit Admin</h1>
+
+<form action="/admin/edit-admin" method="post" enctype="multipart/form-data">
+
+    <input
+        type="text"
+        name="name"
+        value="<%= admin.name %>"
+        placeholder="Enter your name"
+        required
+    >
+
+    <br><br>
+
+    <input
+        type="email"
+        name="email"
+        id="email"
+        value="<%= admin.email %>"
+        placeholder="Enter your email"
+        required
+    >
+
+    <br><br>
+
+    <input
+        type="tel"
+        name="mobile"
+        id="mobile"
+        value="<%= admin.mobile %>"
+        placeholder="Enter your mobile number"
+        required
+        pattern="[0-9]{10}"
+    >
+
+    <br><br>
+
+    <input type="file" name="image">
+
+    <br><br>
+
+    <input type="submit" value="Update">
+
+</form>
+
+<script>
+
+const mobile = document.getElementById("mobile");
+
+mobile.addEventListener("input", function () {
+    mobile.value = mobile.value.replace(/\D/g, "").slice(0, 10);
+
+    if (mobile.value.length < 10) {
+        mobile.setCustomValidity("Mobile number must contain 10 digits.");
+    } else {
+        mobile.setCustomValidity("");
+    }
+});
+
+</script>
+
+<% include("../layouts/footer.ejs") %>
